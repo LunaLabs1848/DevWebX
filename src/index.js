@@ -14,21 +14,42 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Failed to copy text: ", err);
       });
   };
-  
+
   // Function to render picked colors
   const renderPickedColors = (colors) => {
     pickedColors.innerHTML = ""; // Clear existing colors
-    colors.forEach(color => {
-        const colorItem = document.createElement("div");
-        colorItem.classList.add("color-item");
-        colorItem.style.backgroundColor = color;
-        colorItem.title = color;
+    colors.forEach((color) => {
+      const colorItem = document.createElement("div");
+      colorItem.classList.add("color-item");
+      colorItem.style.backgroundColor = color;
+      colorItem.title = color;
 
-        colorItem.addEventListener("click", () => {
-            copyToClipboard(color);
-        });
+      colorItem.addEventListener("click", () => {
+        copyToClipboard(color);
+      });
 
-        pickedColors.appendChild(colorItem);
+      pickedColors.appendChild(colorItem);
     });
-};
+  };
+
+  // Initialize picked colors on load
+  renderPickedColors(getStoredColors());
+
+  // EyeDropper functionality
+  eyeDropperBtn.addEventListener("click", async () => {
+    if (!window.EyeDropper) {
+      alert("EyeDropper API is not supported in this browser.");
+      return;
+    }
+
+    try {
+      const eyeDropper = new EyeDropper();
+      const result = await eyeDropper.open();
+      const pickedColor = result.sRGBHex;
+      storeColor(pickedColor);
+      copyToClipboard(pickedColor);
+    } catch (error) {
+      console.error("Error using EyeDropper: ", error);
+    }
+  });
 });
