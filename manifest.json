@@ -13,6 +13,6 @@
       "js": ["./src/contentScript.js"]
     }
   ],
-  "permissions": ["tabs", "storage"],
+  "permissions": ["tabs", "storage", "clipboardWrite"],
   "host_permissions": ["<all_urls>"]
 }

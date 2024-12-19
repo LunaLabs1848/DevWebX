@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const eyeDropperBtn = document.getElementById("eye_dropper_btn");
   const pickedColors = document.getElementById("picked_colors_container");
 
+  if (!eyeDropperBtn || !pickedColors) {
+    console.error("Button element not found!");
+    return;
+  }
+
   // Function to copy color to clipboard
   const copyToClipboard = (text) => {
     navigator.clipboard
