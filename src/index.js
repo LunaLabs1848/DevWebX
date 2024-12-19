@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const mainContainer = document.getElementById("main_container");
   const eyeDropperBtn = document.getElementById("eye_dropper_btn");
   const pickedColors = document.getElementById("picked_colors_container");
 
@@ -30,6 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       pickedColors.appendChild(colorItem);
     });
+  };
+
+  // Fetch stored colors from local storage
+  const getStoredColors = () => {
+    const colors = localStorage.getItem("pickedColors");
+    return colors ? JSON.parse(colors) : [];
+  };
+
+  // Store colors in local storage
+  const storeColor = (color) => {
+    const colors = getStoredColors();
+    if (!colors.includes(color)) {
+      colors.push(color);
+      localStorage.setItem("pickedColors", JSON.stringify(colors));
+      renderPickedColors(colors);
+    }
   };
 
   // Initialize picked colors on load
