@@ -14,4 +14,21 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Failed to copy text: ", err);
       });
   };
+  
+  // Function to render picked colors
+  const renderPickedColors = (colors) => {
+    pickedColors.innerHTML = ""; // Clear existing colors
+    colors.forEach(color => {
+        const colorItem = document.createElement("div");
+        colorItem.classList.add("color-item");
+        colorItem.style.backgroundColor = color;
+        colorItem.title = color;
+
+        colorItem.addEventListener("click", () => {
+            copyToClipboard(color);
+        });
+
+        pickedColors.appendChild(colorItem);
+    });
+};
 });
