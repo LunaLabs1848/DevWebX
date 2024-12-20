@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to render picked colors
   const renderPickedColors = (colors) => {
     pickedColors.innerHTML = ""; // Clear existing colors
-    colors.forEach((color) => {
+    colors.reverse().forEach((color) => {
       const colorItem = document.createElement("div");
       colorItem.classList.add("color-item");
       colorItem.style.backgroundColor = color;
@@ -67,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const colors = getStoredColors();
     if (!colors.includes(color)) {
       colors.push(color);
+      // Keep only the latest 10 colors
+      if (colors.length > 10) {
+        colors.shift(); // Remove the oldest color
+      }
       localStorage.setItem("pickedColors", JSON.stringify(colors));
       renderPickedColors(colors);
     }
