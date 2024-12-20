@@ -52,8 +52,35 @@
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       }
 
+      .picked_colors_title_container {
+        position: relative;
+        text-align: center;
+        margin: 10px 0;
+      }
+
+      .picked_colors_title {
+        font-weight: 600;
+        color: #333333;
+        position: relative;
+        background-color: #f9f9f9;
+        display: inline-block;
+        padding: 0 10px;
+        z-index: 1;
+      }
+
+      .picked_colors_title_container::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #ccc;
+        z-index: 0;
+      }
+
       #picked_colors_container {
-        margin-top: 20px;
+        margin-top: 12px;
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
@@ -82,6 +109,9 @@
       <button id="eye_dropper_btn" class="round-button" title="Eye Dropper">
         <img src="../assets/eye_dropper.svg" alt="Eye Dropper" />
       </button>
+      <div class="picked_colors_title_container">
+        <p class="picked_colors_title">Last 10 Picked Colors</p>
+      </div>
       <div id="picked_colors_container"></div>
     </div>
     <script src="./index.js"></script>
