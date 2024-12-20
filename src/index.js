@@ -19,6 +19,24 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   };
 
+  const calculateLuminance = (hexColor) => {
+    // Convert hex color to RGB
+    const rgb = hexColor.match(/[A-Za-z0-9]{2}/g).map((x) => parseInt(x, 16));
+    // Calculate relative luminance
+    const [r, g, b] = rgb.map((channel) => {
+      const scaled = channel / 255;
+      return scaled <= 0.03928
+        ? scaled / 12.92
+        : Math.pow((scaled + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+
+  const getTextColor = (hexColor) => {
+    const luminance = calculateLuminance(hexColor);
+    return luminance > 0.5 ? "#333333" : "#F0F0F0"; // Dark gray for light colors, off-white for dark colors
+  };
+
   // Function to render picked colors
   const renderPickedColors = (colors) => {
     pickedColors.innerHTML = ""; // Clear existing colors
@@ -26,6 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const colorItem = document.createElement("div");
       colorItem.classList.add("color-item");
       colorItem.style.backgroundColor = color;
+      colorItem.style.color = getTextColor(color);
+      colorItem.textContent = color;
       colorItem.title = color;
 
       colorItem.addEventListener("click", () => {
